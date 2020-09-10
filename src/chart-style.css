@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+}
+
+svg {
+    padding-left: 50px;
+    padding-top: 15px;
+    overflow: visible;
+}
+
+.svg-container {
+    width: fit-content;
+    height: fit-content;
+}
