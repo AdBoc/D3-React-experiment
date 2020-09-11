@@ -7,19 +7,20 @@ function GraphicsCardChart() {
 
   const width = 400;
   const height = 400;
+  // const margin = {top: 20, right: 20, bottom: 20, left: 20};
 
   const xScale = d3.scaleLinear()
     .domain([4000, d3.max(gpuData, d => d.x)] as any)
     .range([0, width]);
   const yScale = d3.scaleLinear()
-    .domain([0, d3.max(gpuData, d => d.y)] as any)
+    .domain([0, 7000])
     .range([height, 0]);
 
   function xAxis(g: any) {
     g.attr('transform', `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale))
+      .call(d3.axisBottom(xScale).ticks(10)) //ticks: how many ticks whole chart has
       .call((g: any) => g.append("text")
-        .attr("x", width)
+        .attr("x", width - 2)
         .attr("y", -5)
         .attr("fill", "currentColor")
         .attr("text-anchor", "end")
@@ -28,9 +29,9 @@ function GraphicsCardChart() {
 
   function yAxis(g: any) {
     g.attr('transform', `translate(0, 0)`)
-      .call(d3.axisLeft(yScale))
+      .call(d3.axisLeft(yScale).ticks(10))
       .call((g: any) => g.append("text")
-        .attr("x", 0)
+        .attr("x", 2)
         .attr("y", -5)
         .attr("fill", "currentColor")
         .attr("text-anchor", "start")
@@ -38,15 +39,27 @@ function GraphicsCardChart() {
         .text("Price"));
   }
 
-  // function xGrid() {
-  //   return d3.axisBottom(xScale).ticks(8);
-  // }
+  // const xGrid = d3.axisBottom(xScale)
+  //   .tickSize(height)
+  //   .tickFormat('' as any)
+  //   .ticks(10);
   //
-  // function yGrid() {
-  //   return d3.axisLeft(yScale).ticks(5);
-  // }
+  // const yGrid = d3.axisLeft(yScale)
+  //   .tickSize(-width)
+  //   .tickFormat('' as any)
+  //   .ticks(10);
 
   useEffect(() => {
+    // d3.select(chartRef.current)
+    //   .append('g')
+    //   .attr('class', 'x axis-grid')
+    //   .call(xGrid);
+    //
+    // d3.select(chartRef.current)
+    //   .append('g')
+    //   .attr('class', 'y axis-grid')
+    //   .call(yGrid);
+
     d3.select(chartRef.current)
       .append('g')
       .call(xAxis);
@@ -73,6 +86,4 @@ function GraphicsCardChart() {
 }
 
 export default GraphicsCardChart;
-
-// viewBox={`0 0 ${width} ${height}`}
-// width={width} height={height} use instead of viewBox
+// viewBox={`0 0 ${width} ${height}`} // width={width} height={height} use instead of viewBox

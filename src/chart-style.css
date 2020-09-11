@@ -18,3 +18,9 @@ svg {
 .charts {
     display: flex;
 }
+
+.axis-grid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    stroke-dasharray: 5,5;
+}
