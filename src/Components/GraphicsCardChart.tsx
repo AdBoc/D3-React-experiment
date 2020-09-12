@@ -10,7 +10,7 @@ function GraphicsCardChart() {
   // const margin = {top: 20, right: 20, bottom: 20, left: 20};
 
   const xScale = d3.scaleLinear()
-    .domain([4000, d3.max(gpuData, d => d.x)] as any)
+    .domain([4000, 15000]) //d3.max(gpuData, d => d.x)] as any
     .range([0, width]);
   const yScale = d3.scaleLinear()
     .domain([0, 7000])
@@ -18,7 +18,7 @@ function GraphicsCardChart() {
 
   function xAxis(g: any) {
     g.attr('transform', `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale).ticks(10)) //ticks: how many ticks whole chart has
+      .call(d3.axisBottom(xScale))
       .call((g: any) => g.append("text")
         .attr("x", width - 2)
         .attr("y", -5)
@@ -29,7 +29,7 @@ function GraphicsCardChart() {
 
   function yAxis(g: any) {
     g.attr('transform', `translate(0, 0)`)
-      .call(d3.axisLeft(yScale).ticks(10))
+      .call(d3.axisLeft(yScale))
       .call((g: any) => g.append("text")
         .attr("x", 2)
         .attr("y", -5)
@@ -39,26 +39,26 @@ function GraphicsCardChart() {
         .text("Price"));
   }
 
-  // const xGrid = d3.axisBottom(xScale)
-  //   .tickSize(height)
-  //   .tickFormat('' as any)
-  //   .ticks(10);
-  //
-  // const yGrid = d3.axisLeft(yScale)
-  //   .tickSize(-width)
-  //   .tickFormat('' as any)
-  //   .ticks(10);
+  const xGrid = d3.axisBottom(xScale)
+    .tickSize(height)
+    .tickFormat('' as any)
+    .ticks(12);
+
+  const yGrid = d3.axisLeft(yScale)
+    .tickSize(-width)
+    .tickFormat('' as any)
+    .ticks(12);
 
   useEffect(() => {
-    // d3.select(chartRef.current)
-    //   .append('g')
-    //   .attr('class', 'x axis-grid')
-    //   .call(xGrid);
-    //
-    // d3.select(chartRef.current)
-    //   .append('g')
-    //   .attr('class', 'y axis-grid')
-    //   .call(yGrid);
+    d3.select(chartRef.current)
+      .append('g')
+      .attr('class', 'axis-grid')
+    .call(xGrid);
+
+    d3.select(chartRef.current)
+      .append('g')
+      .attr('class', 'axis-grid')
+      .call(yGrid);
 
     d3.select(chartRef.current)
       .append('g')
