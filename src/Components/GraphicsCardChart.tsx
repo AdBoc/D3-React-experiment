@@ -5,9 +5,9 @@ import {gpuData} from '../data';
 function GraphicsCardChart() {
   const chartRef = useRef(null);
 
-  const width = 800;
-  const height = 400;
-  // const margin = {top: 20, right: 20, bottom: 20, left: 20};
+  const margin = {top: 20, right: 20, bottom: 20, left: 20};
+  const width = 900 - margin.left - margin.right;
+  const height = 500 - margin.top - margin.bottom;
 
   const xScale = d3.scaleLinear()
     .domain([4000, 15000])
@@ -36,7 +36,7 @@ function GraphicsCardChart() {
         .attr("fill", "currentColor")
         .attr("text-anchor", "start")
         .attr("transform", "rotate(90)")
-        .text("Price"));
+        .text("Price (usd)"));
   }
 
   const xGrid = d3.axisBottom(xScale)
@@ -106,13 +106,14 @@ function GraphicsCardChart() {
   });
 
   return (
-    <>
+    <div className="project">
       <p>TOP 20 GPUs</p>
-      <p>Data comes from:</p>
-      <a href="https://benchmarks.ul.com/compare/best-gpus" target="_blank" rel="noopener noreferrer" className="link">benchmarks.ul.com/compare/best-gpus</a>
       <p>Hover over points to see details</p>
-      <svg ref={chartRef}/>
-    </>
+      <p>Data comes from: <a href="https://benchmarks.ul.com/compare/best-gpus" target="_blank" rel="noopener noreferrer">benchmarks.ul.com/compare/best-gpus</a></p>
+      <div className="chart">
+        <svg ref={chartRef} viewBox={`0 0 ${width} ${height}`}/>
+      </div>
+    </div>
   )
 }
 

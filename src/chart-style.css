@@ -8,15 +8,15 @@ svg {
     overflow: visible;
 }
 
+.project {
+    text-align: center;
+}
+
 .svg-container {
     width: 300px;
     height: 250px;
     border: 1px solid black;
     margin: 10px;
-}
-
-.link {
-    display: block;
 }
 
 .axis-grid line {
@@ -40,4 +40,13 @@ svg {
     border: 0;
     border-radius: 8px;
     pointer-events: none;
+}
+
+.chart {
+    min-width: 200px;
+    min-height: 400px;
+    max-width: 1200px;
+    max-height: 1200px;
+    padding-right: 100px;
+    margin: auto;
 }
