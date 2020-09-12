@@ -5,12 +5,12 @@ import {gpuData} from '../data';
 function GraphicsCardChart() {
   const chartRef = useRef(null);
 
-  const width = 400;
+  const width = 800;
   const height = 400;
   // const margin = {top: 20, right: 20, bottom: 20, left: 20};
 
   const xScale = d3.scaleLinear()
-    .domain([4000, 15000]) //d3.max(gpuData, d => d.x)] as any
+    .domain([4000, 15000])
     .range([0, width]);
   const yScale = d3.scaleLinear()
     .domain([0, 7000])
@@ -49,11 +49,15 @@ function GraphicsCardChart() {
     .tickFormat('' as any)
     .ticks(12);
 
+  const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
   useEffect(() => {
     d3.select(chartRef.current)
       .append('g')
       .attr('class', 'axis-grid')
-    .call(xGrid);
+      .call(xGrid);
 
     d3.select(chartRef.current)
       .append('g')
@@ -75,11 +79,38 @@ function GraphicsCardChart() {
       .append("circle")
       .attr("cx", d => xScale(d.x))
       .attr("cy", d => yScale(d.y))
-      .attr("r", 1);
+      .attr("r", 2)
+      .attr("fill", function (d) {
+        if (d.nvidia) return "green"
+        return "red"
+      })
+      .on("mouseover", function (event) {
+        // @ts-ignore
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", .9);
+        // @ts-ignore
+        tooltip.html(event.target.__data__.label + "<br/> (" + event.target.__data__.x
+          // @ts-ignore
+          + ", " + event.target.__data__.y + "$)")
+          // @ts-ignore
+          .style("left", (event.pageX + 5) + "px")
+          // @ts-ignore
+          .style("top", (event.pageY - 28) + "px");
+      })
+      .on("mouseout", function () {
+        tooltip.transition()
+          .duration(500)
+          .style("opacity", 0);
+      });
   });
 
   return (
     <>
+      <p>TOP 20 GPUs</p>
+      <p>Data comes from:</p>
+      <a href="https://benchmarks.ul.com/compare/best-gpus" target="_blank" rel="noopener noreferrer" className="link">benchmarks.ul.com/compare/best-gpus</a>
+      <p>Hover over points to see details</p>
       <svg ref={chartRef}/>
     </>
   )

@@ -15,8 +15,8 @@ svg {
     margin: 10px;
 }
 
-.charts {
-    display: flex;
+.link {
+    display: block;
 }
 
 .axis-grid line {
@@ -32,11 +32,11 @@ svg {
 .tooltip {
     position: absolute;
     text-align: center;
-    width: 60px;
-    height: 28px;
+    width: fit-content;
+    height: fit-content;
     padding: 2px;
     font: 12px sans-serif;
-    background: lightsteelblue;
+    background: #d9d8d4;
     border: 0;
     border-radius: 8px;
     pointer-events: none;
